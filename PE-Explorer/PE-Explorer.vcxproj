@@ -104,10 +104,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,7 +129,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="PE-Explorer.cpp" />
+    <ClCompile Include="external\IMGUI\imgui.cpp" />
+    <ClCompile Include="external\IMGUI\imgui_demo.cpp" />
+    <ClCompile Include="external\IMGUI\imgui_draw.cpp" />
+    <ClCompile Include="external\IMGUI\imgui_impl_dx9.cpp" />
+    <ClCompile Include="external\IMGUI\imgui_impl_win32.cpp" />
+    <ClCompile Include="external\IMGUI\imgui_tables.cpp" />
+    <ClCompile Include="external\IMGUI\imgui_widgets.cpp" />
+    <ClCompile Include="GUI\gui.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SDK\GrabPEInfo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="external\IMGUI\imconfig.h" />
+    <ClInclude Include="external\IMGUI\imgui.h" />
+    <ClInclude Include="external\IMGUI\imgui_impl_dx9.h" />
+    <ClInclude Include="external\IMGUI\imgui_impl_win32.h" />
+    <ClInclude Include="external\IMGUI\imgui_internal.h" />
+    <ClInclude Include="external\IMGUI\imstb_rectpack.h" />
+    <ClInclude Include="external\IMGUI\imstb_textedit.h" />
+    <ClInclude Include="external\IMGUI\imstb_truetype.h" />
+    <ClInclude Include="GUI\gui.h" />
+    <ClInclude Include="SDK\GrabPEInfo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
