@@ -150,6 +150,7 @@
     <ClInclude Include="external\IMGUI\imstb_textedit.h" />
     <ClInclude Include="external\IMGUI\imstb_truetype.h" />
     <ClInclude Include="GUI\gui.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="SDK\GrabPEInfo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,5 +1,6 @@
 #include "gui.h"
-
+#include "../main.h"
+#include "../SDK/GrabPEInfo.h"
 #include "../external/IMGUI/imgui.h"
 #include "../external/IMGUI/imgui_impl_dx9.h"
 #include "../external/IMGUI/imgui_impl_win32.h"
@@ -174,7 +175,7 @@
 		ImGui::CreateContext();
 		ImGuiIO& io = ::ImGui::GetIO();
 
-		io.IniFilename = NULL;
+		io.IniFilename = NULL;;
 
 		ImGuiStyle* style = &ImGui::GetStyle();
 		style->WindowTitleAlign = ImVec2(0.5f, 0.5f);
@@ -187,6 +188,12 @@
 		style->Colors[ImGuiCol_Button] = ImColor(236, 255, 0, 180);
 		style->Colors[ImGuiCol_ButtonHovered] = ImColor(236, 255, 0, 200);
 		style->Colors[ImGuiCol_ButtonActive] = ImColor(236, 255, 0, 200);
+
+		style->Colors[ImGuiCol_Header] = ImColor(236, 255, 0, 180);
+		style->Colors[ImGuiCol_HeaderHovered] = ImColor(236, 255, 0, 200);
+		
+
+		static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 
 		ImGui_ImplWin32_Init(window);
 		ImGui_ImplDX9_Init(d3ddev);
@@ -244,14 +251,28 @@
 
 		ImGui::SetNextWindowPos({ 0, 0 });
 		ImGui::SetNextWindowSize({ 1000, 800 });
-
-
+		
 		ImGui::Begin(
-			"PE-Explorer Made by MonkeyWRLD",
+			"PE-Explorer",
 			&isRunning,
 			ImGuiWindowFlags_NoResize |
-			ImGuiWindowFlags_NoCollapse
+			ImGuiWindowFlags_NoCollapse|
+			ImGuiWindowFlags_NoBringToFrontOnFocus
 		);
+
+		if (ImGui::BeginMainMenuBar())
+		{
+			ImGui::MenuItem("PE-Explorer", NULL, false, false);
+			if (ImGui::BeginMenu("File"))
+			{
+				if (ImGui::MenuItem("Open", "Ctrl+O")) { SDK::PE::Main(); }
+				if (ImGui::MenuItem("Close", "Alt+F4")) { ExitPrgm(); }
+				ImGui::EndMenu();
+			}
+			ImGui::EndMainMenuBar();
+		}
+		
+
 		ImGui::Text("APPLICATION NAME.EXTENTION");
 
 		ImGui::Columns(2, "Columns", false);
@@ -259,7 +280,12 @@
 
 		ImGui::BeginChild("leftTab", ImVec2(200, (HEIGHT - 60)), true, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
-		if (ImGui::Button("Summary", ImVec2(180, 50))) {
+
+		
+
+
+
+		if (ImGui::Button("Summary", ImVec2(200, 50))) {
 
 		}
 		ImGui::Spacing();
@@ -283,11 +309,25 @@
 
 		}
 		ImGui::Spacing();
-		if (ImGui::Button("Headers", ImVec2(180, 50))) {
+		if (ImGui::CollapsingHeader("Headers"))
+		{
+			static int selected = -1;
 
-		}
-		ImGui::Dummy({ 0, 270 });
-		if (ImGui::Button("Settings", ImVec2(180, 50))) {
+			if (ImGui::Selectable("DOS Header", selected == 1)) {
+				selected = 1;
+			}
+			if (ImGui::Selectable("NT Header", selected == 2)) {
+				selected = 2;
+			}
+			if (ImGui::Selectable("File Header", selected == 3)) {
+				selected = 3;
+			}
+			if (ImGui::Selectable("Optional Header", selected == 4)) {
+				selected = 4;
+			}
+			if (ImGui::Selectable("Data Header", selected == 5)) {
+				selected = 5;
+			}
 
 		}
 		ImGui::EndChild();
@@ -295,10 +335,10 @@
 
 
 		ImGui::BeginChild("rightTab", ImVec2(770, (HEIGHT - 60)), true, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
-		if (ImGui::Button("Settings", ImVec2(180, 50))) {
+		ImGui::Text("TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST ");
 
-		}
 
+		ImGui::ShowDemoWindow();
 
 		ImGui::EndChild();
 		ImGui::End();

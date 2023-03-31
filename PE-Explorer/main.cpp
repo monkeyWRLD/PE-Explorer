@@ -3,7 +3,17 @@
 #include <thread>
 
 
+void ExitPrgm() {
 
+	// destroy gui
+	GUI::DestroyImGui();
+	GUI::DestroyDevice();
+	GUI::DestroyHWindow();
+
+
+	std::exit(0);
+	
+}
 
 int __stdcall wWinMain(
 	HINSTANCE instance,
@@ -12,10 +22,10 @@ int __stdcall wWinMain(
 	int commandShow)
 {
 
-
 	// create gui
 	GUI::CreateHWindow("PE GUI");
 	GUI::CreateDevice();
+	
 	GUI::CreateImGui();
 
 	while (GUI::isRunning)
@@ -27,10 +37,11 @@ int __stdcall wWinMain(
 		std::this_thread::sleep_for(std::chrono::milliseconds(3));
 	}
 
-	// destroy gui
-	GUI::DestroyImGui();
-	GUI::DestroyDevice();
-	GUI::DestroyHWindow();
+	
+	ExitPrgm();
+
 
 	return EXIT_SUCCESS;
 }
+
+

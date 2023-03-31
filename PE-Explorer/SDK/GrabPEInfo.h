@@ -3,9 +3,12 @@
 #include <winternl.h>
 #include <cstdio>
 #include <strsafe.h>
+#include <iostream>
 
+namespace SDK::PE {
+	HANDLE GetFileContent();
 
-namespace SDK {
+	int Main();
 
 }
 
