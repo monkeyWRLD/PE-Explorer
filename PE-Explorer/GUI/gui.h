@@ -54,7 +54,7 @@ public:
 
 public:
 
-	void open_file();
+	PWSTR open_file();
 
 public:
 
