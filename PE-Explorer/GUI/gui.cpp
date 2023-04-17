@@ -55,45 +55,39 @@ void gui::render_pagebar()
     ImGui::EndTabBar();
 }
 
-void gui::open_file()
+PWSTR gui::open_file()
 {
-    auto hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED |
-        COINIT_DISABLE_OLE1DDE);
+    IFileOpenDialog* fileOpen = nullptr;
+    IShellItem* item = nullptr;
+    PWSTR filePath = nullptr;
 
-    if (SUCCEEDED(hr))
+    const HRESULT initResult = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+    if (!SUCCEEDED(initResult))
     {
-        IFileOpenDialog* file_open;
-
-        hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL,
-            IID_IFileOpenDialog, reinterpret_cast<void**>(&file_open));
-
-        if (SUCCEEDED(hr))
-        {
-            hr = file_open->Show(NULL);
-
-            if (SUCCEEDED(hr))
-            {
-                IShellItem* pItem;
-                hr = file_open->GetResult(&pItem);
-                if (SUCCEEDED(hr))
-                {
-                    PWSTR file_path;
-                    hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &file_path);
-
-                    if (SUCCEEDED(hr))
-                    {
-                        std::wstring w_p(file_path);
-                        std::string s_p = std::string(w_p.begin(), w_p.end());
-
-                        //mem->load_binary(s_p);
-
-                        CoTaskMemFree(file_path);
-                    }
-                    pItem->Release();
-                }
-            }
-            file_open->Release();
-        }
-        CoUninitialize();
+        return nullptr;
     }
+
+    const HRESULT instanceResult = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL, IID_IFileOpenDialog, reinterpret_cast<void**>(&fileOpen));
+    if (!SUCCEEDED(instanceResult))
+    {
+        CoUninitialize();
+        return nullptr;
+    }
+
+    const HRESULT showDialog = fileOpen->Show(NULL);
+    const HRESULT getItemFromDialog = fileOpen->GetResult(&item);
+
+    if (!SUCCEEDED(showDialog) || !SUCCEEDED(getItemFromDialog))
+    {
+        fileOpen->Release();
+        CoUninitialize();
+        return nullptr;
+    }
+
+    item->GetDisplayName(SIGDN_FILESYSPATH, &filePath);
+
+    item->Release();
+    fileOpen->Release();
+    CoUninitialize();
+    return filePath;
 }
