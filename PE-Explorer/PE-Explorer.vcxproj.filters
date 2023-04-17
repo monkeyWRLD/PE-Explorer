@@ -39,10 +39,10 @@
     <ClCompile Include="GUI\gui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="external\IMGUI\imgui_impl_dx9.cpp">
+    <ClCompile Include="GUI\renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\GrabPEInfo.cpp">
+    <ClCompile Include="external\IMGUI\imgui_impl_dx11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,13 +71,13 @@
     <ClInclude Include="GUI\gui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="external\IMGUI\imgui_impl_dx9.h">
+    <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SDK\GrabPEInfo.h">
+    <ClInclude Include="external\IMGUI\imgui_impl_dx11.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="main.h">
+    <ClInclude Include="external\IMGUI\imgui_memory_editor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
